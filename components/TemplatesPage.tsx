@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useMemo } from 'react';
 import { templates } from '../templatesData';
 import { Template } from '../types';

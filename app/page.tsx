@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { courseModules } from '../courseData';
-import { CheckCircleIcon } from './Icons';
+import Link from 'next/link';
+import { courseModules } from '@/courseData';
+import { CheckCircleIcon } from '@/components/Icons';
 
 const FeatureCard: React.FC<{ title: string; description: string; icon: React.ReactNode; link?: string }> = ({ title, description, icon, link }) => {
     const content = (
@@ -14,14 +14,14 @@ const FeatureCard: React.FC<{ title: string; description: string; icon: React.Re
     );
 
     if (link) {
-        return <Link to={link}>{content}</Link>;
+        return <Link href={link}>{content}</Link>;
     }
 
     return content;
 };
 
 
-const HomePage: React.FC = () => {
+export default function HomePage() {
     const firstLessonSlug = courseModules[0]?.lessons[0]?.slug;
 
     return (
@@ -35,7 +35,7 @@ const HomePage: React.FC = () => {
                     </p>
                     {firstLessonSlug && (
                         <Link 
-                            to={`/lesson/${firstLessonSlug}`}
+                            href={`/lesson/${firstLessonSlug}`}
                             className="mt-8 inline-block bg-white text-indigo-600 font-bold py-4 px-10 rounded-lg hover:bg-gray-200 transition-all duration-300 text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
                         >
                             Start Learning Now
@@ -79,7 +79,7 @@ const HomePage: React.FC = () => {
                         return (
                             <div key={module.title} className="p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-700 transition-shadow hover:shadow-md">
                                 {firstModuleLessonSlug ? (
-                                    <Link to={`/lesson/${firstModuleLessonSlug}`} className="block group">
+                                    <Link href={`/lesson/${firstModuleLessonSlug}`} className="block group">
                                         <h3 className="font-bold text-lg text-indigo-600 dark:text-indigo-400 group-hover:underline">Module {index + 1}: {module.title}</h3>
                                     </Link>
                                 ) : (
@@ -89,7 +89,7 @@ const HomePage: React.FC = () => {
                                     {module.lessons.slice(0, 3).map(lesson => (
                                         <li key={lesson.slug} className="flex items-start text-sm">
                                             <CheckCircleIcon className="h-5 w-5 mr-2 text-green-500 flex-shrink-0 mt-0.5" />
-                                            <Link to={`/lesson/${lesson.slug}`} className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-300 hover:underline">
+                                            <Link href={`/lesson/${lesson.slug}`} className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-300 hover:underline">
                                                 <span>{lesson.title}</span>
                                             </Link>
                                         </li>
@@ -106,5 +106,3 @@ const HomePage: React.FC = () => {
         </div>
     );
 };
-
-export default HomePage;

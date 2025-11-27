@@ -1,6 +1,7 @@
+'use client';
 
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Lesson } from '../types';
 import CodeBlock from './CodeBlock';
 import { useLessonProgress } from '../contexts/ProgressContext';
@@ -81,15 +82,15 @@ const LessonContent: React.FC<LessonContentProps> = ({ lesson, prevLesson, nextL
 
       <footer className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row justify-between items-center gap-4">
         {prevLesson ? (
-          <Link to={`/lesson/${prevLesson.slug}`} className="w-full sm:w-auto text-center px-6 py-3 font-semibold text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors">
+          <Link href={`/lesson/${prevLesson.slug}`} className="w-full sm:w-auto text-center px-6 py-3 font-semibold text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors">
             &larr; Previous
             <span className="block text-sm text-gray-500 dark:text-gray-400 truncate">{prevLesson.title}</span>
           </Link>
         ) : <div className="w-full sm:w-auto" />}
         {nextLesson ? (
-          <Link to={`/lesson/${nextLesson.slug}`} className="w-full sm:w-auto text-center px-6 py-3 font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors">
+          <Link href={`/lesson/${nextLesson.slug}`} className="w-full sm:w-auto text-center px-6 py-3 font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors">
             Next &rarr;
-             <span className="block text-sm text-indigo-200 truncate">{nextLesson.title}</span>
+            <span className="block text-sm text-indigo-200 truncate">{nextLesson.title}</span>
           </Link>
         ) : <div className="w-full sm:w-auto" />}
       </footer>
