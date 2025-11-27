@@ -182,26 +182,26 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         </div>
       </nav>
       
-      <div className="p-4 border-t border-gray-200 dark:border-gray-800 space-y-2">
+      <div className="p-4 border-t border-gray-200 dark:border-gray-800 flex gap-2">
          {deferredPrompt && (
             <button
                 onClick={handleInstallClick}
-                className="flex items-center w-full px-3 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors"
+                className="flex-1 flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors"
             >
                 <DownloadIcon className="h-4 w-4 mr-2" />
-                Install App
+                Install
             </button>
          )}
          <button
             onClick={handleShareClick}
-            className="flex items-center w-full px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+            className="flex-1 flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
          >
             <ShareIcon className="h-4 w-4 mr-2" />
-            Share App
+            Share
          </button>
       </div>
 
-      <div className="p-4 border-t border-gray-200 dark:border-gray-800">
+      <div className="p-4 border-t border-gray-200 dark:border-gray-800 pb-safe mb-5">
           <p className="text-xs text-center text-gray-500 dark:text-gray-400">
               BloggerDev is a product of <a href="https://vitabletech.in" target="_blank" rel="noopener noreferrer" className="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">VitableTech</a>.
           </p>
@@ -219,7 +219,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm lg:hidden"
+                className="fixed inset-0 z-[55] bg-black/50 backdrop-blur-sm lg:hidden"
                 onClick={() => setIsOpen(false)}
             />
         )}
@@ -233,7 +233,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                 animate={{ x: 0 }}
                 exit={{ x: "-100%" }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                className="fixed inset-y-0 left-0 z-40 w-72 lg:hidden shadow-2xl"
+                className="fixed top-0 left-0 h-[100dvh] z-[60] w-72 lg:hidden shadow-2xl"
                 onTouchStart={onTouchStart}
                 onTouchMove={onTouchMove}
                 onTouchEnd={onTouchEnd}
