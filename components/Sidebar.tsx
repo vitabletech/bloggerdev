@@ -2,11 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { courseModules } from '../courseData';
 import { XIcon, BookOpenIcon, CheckCircleIcon, ChevronDownIcon, PaletteIcon, LayoutDashboardIcon, InfoIcon, Wand2Icon, PlayCircleIcon, CodeIcon } from './Icons';
 import { useLessonProgress } from '../contexts/ProgressContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import logoImg from './assets/logo.png';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -47,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
     <div className="flex flex-col h-full bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800">
       <div className="flex items-center justify-between h-16 px-4 flex-shrink-0 border-b border-gray-200 dark:border-gray-800">
          <div className="flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white">
-            <img src="/logo.png" alt="BloggerDev Logo" className="h-8 w-auto" />
+            <Image src={logoImg} alt="BloggerDev Logo" className="h-8 w-auto" priority />
             <span>BloggerDev</span>
         </div>
         <button onClick={() => setIsOpen(false)} className="lg:hidden text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors">

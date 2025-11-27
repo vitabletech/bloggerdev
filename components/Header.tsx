@@ -2,11 +2,13 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { MenuIcon, SearchIcon } from './Icons';
 import { courseModules } from '../courseData';
 import { Lesson } from '../types';
 import { ThemeToggle } from './ThemeToggle';
+import logoImg from './assets/logo.png';
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -54,8 +56,9 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
         <button onClick={onMenuClick} className="lg:hidden text-gray-500 dark:text-gray-400 mr-4 focus:outline-none">
           <MenuIcon className="h-6 w-6" />
         </button>
+
         <Link href="/" className="flex items-center gap-2 text-xl font-bold text-gray-800 dark:text-white hover:opacity-80 transition-opacity">
-            <img src="/logo.png" alt="BloggerDev Logo" className="h-8 w-auto" />
+            <Image src={logoImg} alt="BloggerDev Logo" className="h-8 w-auto" priority />
             <span className="hidden sm:inline">BloggerDev</span>
         </Link>
       </div>
