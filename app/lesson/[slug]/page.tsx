@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { courseModules } from '@/courseData';
+import { courseModules } from '@/data/courseData';
 import LessonContent from '@/components/LessonContent';
 import { Metadata } from 'next';
 

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { courseModules } from '@/courseData';
+import { courseModules } from '@/data/courseData';
 import { CheckCircleIcon } from '@/components/Icons';
 
 const FeatureCard: React.FC<{ title: string; description: string; icon: React.ReactNode; link?: string }> = ({ title, description, icon, link }) => {

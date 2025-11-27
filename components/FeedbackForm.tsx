@@ -11,7 +11,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ lessonTitle }) => {
   const [feedback, setFeedback] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   
-  const mailtoHref = `mailto:feedback@example.com?subject=${encodeURIComponent(`Feedback on: ${lessonTitle}`)}&body=${encodeURIComponent(feedback)}`;
+  const mailtoHref = `mailto:info@vitabletech.in?subject=${encodeURIComponent(`Feedback on: ${lessonTitle}`)}&body=${encodeURIComponent(feedback)}`;
 
   if (isSubmitted) {
     return (

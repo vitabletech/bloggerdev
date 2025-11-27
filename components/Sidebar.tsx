@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { courseModules } from '../courseData';
-import { XIcon, BookOpenIcon, CheckCircleIcon, ChevronDownIcon, PaletteIcon, LayoutDashboardIcon, InfoIcon, Wand2Icon, PlayCircleIcon, CodeIcon } from './Icons';
+import { courseModules } from '@/data/courseData';
+import { XIcon, BookOpenIcon, CheckCircleIcon, ChevronDownIcon, PaletteIcon, LayoutDashboardIcon, InfoIcon, Wand2Icon, PlayCircleIcon, CodeIcon, ShareIcon, DownloadIcon } from './Icons';
 import { useLessonProgress } from '../contexts/ProgressContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import logoImg from './assets/logo.png';
@@ -41,6 +41,67 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         setOpenModules(prev => ({ ...prev, [title]: !prev[title] }));
     };
 
+    const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+
+    useEffect(() => {
+        const handler = (e: any) => {
+            e.preventDefault();
+            setDeferredPrompt(e);
+        };
+        window.addEventListener('beforeinstallprompt', handler);
+        return () => window.removeEventListener('beforeinstallprompt', handler);
+    }, []);
+
+    const handleInstallClick = async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            setDeferredPrompt(null);
+        }
+    };
+
+    const handleShareClick = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: 'Blogger Theme Dev Course',
+                    text: 'Master Blogger Theme Development with this free course!',
+                    url: window.location.origin,
+                });
+            } catch (error) {
+                console.log('Error sharing:', error);
+            }
+        } else {
+            // Fallback for browsers that don't support Web Share API
+            navigator.clipboard.writeText(window.location.origin);
+            alert('Link copied to clipboard!');
+        }
+    };
+
+    const [touchStart, setTouchStart] = useState<number | null>(null);
+    const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+    const minSwipeDistance = 50;
+
+    const onTouchStart = (e: React.TouchEvent) => {
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const onTouchMove = (e: React.TouchEvent) => {
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
+
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > minSwipeDistance;
+        if (isLeftSwipe) {
+            setIsOpen(false);
+        }
+    };
+
   const navLinkClasses = "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 group relative overflow-hidden";
   const activeClassName = "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20";
   const inactiveClassName = "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white";
@@ -56,7 +117,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           <XIcon className="h-6 w-6" />
         </button>
       </div>
-      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700">
+      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto no-scrollbar">
         <div className="space-y-1">
             <Link href="/" onClick={() => setIsOpen(false)} className={`${navLinkClasses} ${pathname === '/' ? activeClassName : inactiveClassName}`}><LayoutDashboardIcon className="h-5 w-5 mr-3" /> Home</Link>
             <Link href="/templates" onClick={() => setIsOpen(false)} className={`${navLinkClasses} ${pathname === '/templates' ? activeClassName : inactiveClassName}`}><PaletteIcon className="h-5 w-5 mr-3"/>Templates</Link>
@@ -120,6 +181,31 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         })}
         </div>
       </nav>
+      
+      <div className="p-4 border-t border-gray-200 dark:border-gray-800 space-y-2">
+         {deferredPrompt && (
+            <button
+                onClick={handleInstallClick}
+                className="flex items-center w-full px-3 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors"
+            >
+                <DownloadIcon className="h-4 w-4 mr-2" />
+                Install App
+            </button>
+         )}
+         <button
+            onClick={handleShareClick}
+            className="flex items-center w-full px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+         >
+            <ShareIcon className="h-4 w-4 mr-2" />
+            Share App
+         </button>
+      </div>
+
+      <div className="p-4 border-t border-gray-200 dark:border-gray-800">
+          <p className="text-xs text-center text-gray-500 dark:text-gray-400">
+              BloggerDev is a product of <a href="https://vitabletech.in" target="_blank" rel="noopener noreferrer" className="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">VitableTech</a>.
+          </p>
+      </div>
     </div>
   );
 
@@ -148,6 +234,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                 exit={{ x: "-100%" }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 className="fixed inset-y-0 left-0 z-40 w-72 lg:hidden shadow-2xl"
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
             >
                 {content}
             </motion.aside>

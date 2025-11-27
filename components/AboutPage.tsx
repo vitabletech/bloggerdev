@@ -37,7 +37,7 @@ const AboutPage: React.FC = () => {
             This platform is built for the community. If you have any feedback, find an error, or have a suggestion for a new lesson, please don't hesitate to reach out. Your input helps us make this resource better for everyone.
           </p>
           <p>
-            For support or feedback, please contact us at <a href="mailto:feedback@example.com" className="text-indigo-600 dark:text-indigo-400 hover:underline">feedback@example.com</a>.
+            For support or feedback, please contact us at <a href="mailto:info@vitabletech.in" className="text-indigo-600 dark:text-indigo-400 hover:underline">info@vitabletech.in</a>.
           </p>
         </section>
       </div>

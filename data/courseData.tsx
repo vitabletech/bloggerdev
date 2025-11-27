@@ -1,6 +1,6 @@
 import React from 'react';
-import { Module } from './types';
-import Slider from './components/Slider';
+import { Module } from '../types';
+import Slider from '../components/Slider';
 
 // Sample data for the slider
 const sampleSlides = [
